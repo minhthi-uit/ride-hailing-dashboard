@@ -73,7 +73,7 @@ export default function EditBooking() {
     };
 
     fetchDrivers();
-  }, []);
+  }, [toast]);
 
   // ✅ Handle form submission (Update Booking)
   const onSubmit = async (data: MustBeAny) => {

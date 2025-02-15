@@ -12,6 +12,10 @@ export default function Dashboard() {
   const { data: session } = useSession();
   const router = useRouter();
 
+  const handleLogin = () => {
+    router.push('/login');
+  };
+
   if (!session) {
     return (
       <Card className="max-w-md mx-auto mt-20">
@@ -20,6 +24,9 @@ export default function Dashboard() {
             <Car className="mx-auto h-12 w-12 text-gray-400" />
             <h2 className="text-2xl font-semibold">Authentication Required</h2>
             <p className="text-gray-500">Please log in to access the dashboard.</p>
+            <Button variant="default" color="primary" onClick={handleLogin}>
+              Log In
+            </Button>
           </div>
         </CardContent>
       </Card>
