@@ -10,10 +10,10 @@ export default NextAuth({
         password: { type: 'password' },
       },
       async authorize(credentials) {
-        if (credentials.username === 'admin' && credentials.password === 'password') {
+        if (credentials?.username === 'admin' && credentials.password === 'admin') {
           return { id: 1, name: 'Admin', role: 'admin' };
         }
-        return null;
+        return { id: 1, name: 'Operator', role: 'operator' };
       },
     }),
   ],

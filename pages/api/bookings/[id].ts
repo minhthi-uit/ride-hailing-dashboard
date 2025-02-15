@@ -26,6 +26,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     }
   }
 
-  res.setHeader('Allow', ['GET']);
+  if (req.method === 'PUT') {
+    const index = bookings.findIndex((b) => b.id.toString() === id);
+    if (index === -1) return res.status(404).json({ message: 'Booking not found' });
+    bookings[index] = { ...bookings[index], ...req.body };
+    return res.json(bookings[index]);
+  }
+
   res.status(405).end(`Method ${req.method} Not Allowed`);
 }

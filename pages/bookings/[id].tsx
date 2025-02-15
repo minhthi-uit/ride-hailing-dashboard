@@ -97,6 +97,7 @@ export default function EditBooking() {
 
       router.push("/");
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to update booking",

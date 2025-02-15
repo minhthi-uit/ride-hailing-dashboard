@@ -1,5 +1,8 @@
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -11,22 +14,26 @@ export default function Login() {
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <form className="bg-white p-6 rounded shadow-md w-96" onSubmit={handleLogin}>
-        <h2 className="text-lg font-bold mb-4">Login</h2>
-        <input
-          type="text"
-          placeholder="Username"
-          className="border p-2 w-full mb-2"
-          onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-2 w-full mb-4"
-          onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-        />
-        <button type="submit" className="bg-blue-500 text-white p-2 w-full">Login</button>
-      </form>
+      <Card className="w-96">
+        <CardHeader>
+          <CardTitle>Login</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <Input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+            />
+            <Button type="submit" className="w-full">Login</Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

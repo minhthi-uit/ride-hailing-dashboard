@@ -3,7 +3,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useToast } from "@/hooks/use-toast";
+import { MustBeAny } from "@/types";
 import axios from "axios";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function BookingTable() {
@@ -11,26 +13,27 @@ export default function BookingTable() {
   const [selectedBookings, setSelectedBookings] = useState([]);
   const [, setDeleteDialog] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     axios.get("/api/bookings").then((res) => setBookings(res.data.bookings));
   }, []);
 
-  const deleteBooking = async (id) => {
+  const deleteBooking = async (id: MustBeAny) => {
     setDeleteDialog(false);
     await axios.delete("/api/bookings", { data: { id } });
-    setBookings(bookings.filter((b) => b.id !== id));
+    setBookings(bookings.filter((b: MustBeAny) => b.id !== id));
     toast({ title: "Booking Deleted", description: `Booking ${id} has been deleted.` });
   };
 
   const bulkDelete = async () => {
     if (selectedBookings.length === 0) return;
     await axios.post("/api/bookings/bulk-delete", { ids: selectedBookings });
-    setBookings(bookings.filter((b) => !selectedBookings.includes(b.id)));
+    setBookings(bookings.filter((b: MustBeAny) => !selectedBookings.includes(b.id)));
     setSelectedBookings([]);
     toast({ title: "Bookings Deleted", description: `${selectedBookings.length} bookings have been deleted.` });
   };
-  const onEdit = (booking) => {
+  const onEdit = (booking: MustBeAny) => {
     router.push(`/bookings/${booking.id}`);
   };
   return (
@@ -58,7 +61,7 @@ export default function BookingTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {bookings.map((b) => (
+          {bookings.map((b: MustBeAny) => (
             <TableRow key={b.id}>
               <TableCell>
                 <Checkbox checked={selectedBookings.includes(b.id)} onCheckedChange={() => setSelectedBookings((prev) => prev.includes(b.id) ? prev.filter(id => id !== b.id) : [...prev, b.id])} />
