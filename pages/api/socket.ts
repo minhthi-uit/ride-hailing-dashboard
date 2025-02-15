@@ -1,6 +1,7 @@
+import { MustBeAny } from '@/types';
 import { Server } from 'socket.io';
 
-export default function handler(req, res) {
+export default function handler(res: MustBeAny) {
   if (!res.socket.server.io) {
     const io = new Server(res.socket.server);
     res.socket.server.io = io;

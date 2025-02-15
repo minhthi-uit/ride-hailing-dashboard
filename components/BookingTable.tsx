@@ -9,8 +9,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function BookingTable() {
-  const [bookings, setBookings] = useState([]);
-  const [selectedBookings, setSelectedBookings] = useState([]);
+  const [bookings, setBookings] = useState<MustBeAny>([]);
+  const [selectedBookings, setSelectedBookings] = useState<MustBeAny>([]);
   const [, setDeleteDialog] = useState(false);
   const { toast } = useToast();
   const router = useRouter();
@@ -49,7 +49,7 @@ export default function BookingTable() {
         <TableHeader>
           <TableRow>
             <TableHead>
-              <Checkbox onCheckedChange={(checked) => setSelectedBookings(checked ? bookings.map((b) => b.id) : [])} />
+              <Checkbox onCheckedChange={(checked) => setSelectedBookings(checked ? bookings.map((b: MustBeAny) => b.id) : [])} />
             </TableHead>
             <TableHead>ID</TableHead>
             <TableHead>Customer</TableHead>
@@ -64,7 +64,7 @@ export default function BookingTable() {
           {bookings.map((b: MustBeAny) => (
             <TableRow key={b.id}>
               <TableCell>
-                <Checkbox checked={selectedBookings.includes(b.id)} onCheckedChange={() => setSelectedBookings((prev) => prev.includes(b.id) ? prev.filter(id => id !== b.id) : [...prev, b.id])} />
+                <Checkbox checked={selectedBookings.includes(b.id)} onCheckedChange={() => setSelectedBookings((prev: MustBeAny) => prev.includes(b.id) ? prev.filter((id: MustBeAny) => id !== b.id) : [...prev, b.id])} />
               </TableCell>
               <TableCell>{b.id}</TableCell>
               <TableCell>{b.customer}</TableCell>

@@ -1,6 +1,12 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+declare module 'next-auth' {
+  interface User {
+    role?: string;
+  }
+}
+
 export default NextAuth({
   providers: [
     CredentialsProvider({
@@ -11,9 +17,9 @@ export default NextAuth({
       },
       async authorize(credentials) {
         if (credentials?.username === 'admin' && credentials.password === 'admin') {
-          return { id: 1, name: 'Admin', role: 'admin' };
+          return { id: '1', name: 'Admin', role: 'admin' };
         }
-        return { id: 1, name: 'Operator', role: 'operator' };
+        return { id: '1', name: 'Operator', role: 'operator' };
       },
     }),
   ],

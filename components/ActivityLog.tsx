@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 
 export default function ActivityLog() {
-  const [logs, setLogs] = useState([]);
+  const [logs, setLogs] = useState<MustBeAny>([]);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function ActivityLog() {
     });
 
     socket.on('activityUpdate', (updatedLogs) => {
-      setLogs(() => {
+      setLogs((prevLogs: MustBeAny) => {
         // Keep only the latest 50 logs to prevent excessive rendering
-        const newLogs = [...updatedLogs].reverse();
+        const newLogs = [...updatedLogs, ...prevLogs].reverse();
         return newLogs.slice(0, 50);
       });
     });
@@ -67,7 +67,7 @@ export default function ActivityLog() {
             </div>
           ) : (
             <div className="space-y-4">
-              {logs.map((log, index) => (
+              {logs.map((log: MustBeAny, index: number) => (
                 <div
                   key={index}
                   className="flex items-start gap-2 text-sm"

@@ -4,6 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { MustBeAny } from "@/types";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -75,9 +76,9 @@ export default function EditBooking() {
   }, []);
 
   // ✅ Handle form submission (Update Booking)
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: MustBeAny) => {
     try {
-      const selectedDriver = drivers.find((d) => d.id === parseInt(data.driverId));
+      const selectedDriver = drivers.find((d: MustBeAny) => d.id === parseInt(data.driverId));
 
       await fetch(`/api/bookings/${id}`, {
         method: "PUT",
@@ -197,7 +198,7 @@ export default function EditBooking() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {drivers.map((driver) => (
+                        {drivers.map((driver: MustBeAny) => (
                           <SelectItem key={driver.id} value={driver.id.toString()}>
                             {driver.name} - {driver.vehicle}
                           </SelectItem>
