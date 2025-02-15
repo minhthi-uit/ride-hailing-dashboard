@@ -33,4 +33,4 @@ To access the dashboard, use the following credentials:
   - **Username:** operator
   - **Password:** operator
 
-You can log in by navigating to the [login page](http://localhost:3000/auth/login).
+You can log in by navigating to the [login page](http://localhost:3000/login).
