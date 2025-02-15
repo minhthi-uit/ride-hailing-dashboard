@@ -4,6 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { MustBeAny } from "@/types";
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
@@ -22,7 +23,7 @@ export default function NewBooking() {
     }
   });
 
-  const [drivers, setDrivers] = useState([]);
+  const [drivers, setDrivers] = useState<MustBeAny>([]);
 
   useEffect(() => {
     const fetchDrivers = async () => {
@@ -31,6 +32,7 @@ export default function NewBooking() {
         const data = await response.json();
         setDrivers(data);
       } catch (error) {
+        console.error(error);
         toast({
           title: "Error fetching drivers",
           description: "Please try again later",
@@ -42,9 +44,9 @@ export default function NewBooking() {
     fetchDrivers();
   }, []);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: MustBeAny) => {
     try {
-      const selectedDriver = drivers.find(d => d.id === parseInt(data.driverId));
+      const selectedDriver = drivers.find((d: MustBeAny) => d.id === parseInt(data.driverId));
 
       await fetch('/api/bookings', {
         method: 'POST',
@@ -64,6 +66,7 @@ export default function NewBooking() {
 
       router.push('/');
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to create booking",
@@ -163,7 +166,7 @@ export default function NewBooking() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {drivers.map((driver) => (
+                        {drivers.map((driver: MustBeAny) => (
                           <SelectItem key={driver.id} value={driver.id.toString()}>
                             {driver.name} - {driver.vehicle}
                           </SelectItem>
